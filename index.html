@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Viajes Rebeca</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --coral: #FF6B4A; --teal: #00BFA5; --sun: #FFD166; --deep: #1A1A2E; --light: #F8F4EF; }
+  body { font-family: Georgia, serif; background: var(--light); }
+  nav { background: var(--deep); padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 1.5rem; font-weight: bold; color: var(--sun); }
+  .logo span { color: var(--coral); }
+  nav ul { list-style: none; display: flex; gap: 28px; }
+  nav ul li a { color: #ccc; text-decoration: none; font-size: 0.9rem; }
+  nav ul li a.active { color: var(--sun); }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* INICIO */
+  .hero { background: linear-gradient(135deg, #FF6B4A, #FF9A3C, #00BFA5); color: white; text-align: center; padding: 100px 40px 80px; }
+  .hero h1 { font-size: 3rem; margin-bottom: 14px; }
+  .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 540px; margin: 0 auto 36px; }
+  .btn-hero { background: white; color: var(--coral); padding: 14px 36px; border-radius: 40px; font-weight: bold; border: none; font-size: 1rem; cursor: pointer; }
+  .sorteo { background: var(--sun); text-align: center; padding: 14px; font-weight: bold; color: var(--deep); }
+  .sorteo a { color: var(--coral); }
+  .features { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; max-width: 960px; margin: 60px auto; padding: 0 40px; }
+  .f-card { background: white; border-radius: 16px; padding: 36px 24px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,.07); }
+  .f-card .icon { font-size: 2.5rem; margin-bottom: 14px; }
+  .f-card h3 { color: var(--coral); margin-bottom: 8px; }
+  .f-card p { font-size: 0.85rem; color: #666; line-height: 1.6; }
+  .section-title { text-align: center; font-size: 2rem; margin: 50px 0 28px; }
+  .section-title span { color: var(--coral); }
+  .dest-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; max-width: 1100px; margin: 0 auto 60px; padding: 0 40px; }
+  .dest-card { border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.1); background: white; }
+  .dest-img { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+  .d1 { background: linear-gradient(135deg,#FF6B4A,#FF9A3C); }
+  .d2 { background: linear-gradient(135deg,#00BFA5,#007AFF); }
+  .d3 { background: linear-gradient(135deg,#A855F7,#EC4899); }
+  .dest-info { padding: 18px; }
+  .dest-info h4 { margin-bottom: 6px; }
+  .dest-info p { font-size: 0.82rem; color: #777; margin-bottom: 10px; }
+  .tag { background: var(--sun); color: var(--deep); font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-weight: bold; }
+  .sobre-banner { background: var(--deep); color: white; display: flex; align-items: center; justify-content: center; gap: 40px; padding: 60px 40px; }
+  .avatar { width: 110px; height: 110px; border-radius: 50%; background: linear-gradient(135deg,var(--coral),var(--sun)); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+  .sobre-text h3 { font-size: 1.5rem; margin-bottom: 10px; }
+  .sobre-text p { font-size: 0.9rem; opacity: 0.8; max-width: 420px; line-height: 1.7; }
+
+  /* VIAJES */
+  .viajes-hero { background: linear-gradient(135deg,#00BFA5,#007AFF); color: white; text-align: center; padding: 70px 40px 50px; }
+  .viajes-hero h1 { font-size: 2.4rem; margin-bottom: 10px; }
+  .filtros { display: flex; justify-content: center; gap: 12px; padding: 32px 40px 16px; flex-wrap: wrap; }
+  .f-btn { border: 2px solid var(--teal); background: white; color: var(--teal); padding: 8px 20px; border-radius: 30px; cursor: pointer; font-size: 0.88rem; font-weight: bold; }
+  .f-btn.active, .f-btn:hover { background: var(--teal); color: white; }
+  .guias-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 26px; max-width: 1100px; margin: 20px auto 60px; padding: 0 40px; }
+  .g-card { border-radius: 16px; background: white; box-shadow: 0 4px 20px rgba(0,0,0,.08); overflow: hidden; }
+  .g-img { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; }
+  .g1 { background: linear-gradient(135deg,#FF6B4A,#FFD166); }
+  .g2 { background: linear-gradient(135deg,#00BFA5,#007AFF); }
+  .g3 { background: linear-gradient(135deg,#A855F7,#EC4899); }
+  .g4 { background: linear-gradient(135deg,#FF9A3C,#FF6B4A); }
+  .g5 { background: linear-gradient(135deg,#007AFF,#00BFA5); }
+  .g6 { background: linear-gradient(135deg,#EC4899,#A855F7); }
+  .precio { position: absolute; top: 10px; right: 10px; background: white; font-size: 0.78rem; font-weight: bold; padding: 3px 9px; border-radius: 20px; }
+  .g-info { padding: 18px; }
+  .g-info h4 { margin-bottom: 6px; }
+  .g-info p { font-size: 0.82rem; color: #777; margin-bottom: 12px; line-height: 1.5; }
+  .g-meta { display: flex; align-items: center; gap: 10px; }
+  .tag-t { background: #E0F7F4; color: var(--teal); font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-weight: bold; }
+  .btn-c { background: var(--coral); color: white; border: none; padding: 7px 16px; border-radius: 20px; font-size: 0.82rem; font-weight: bold; cursor: pointer; margin-left: auto; }
+  footer { background: var(--deep); color: #aaa; text-align: center; padding: 28px; font-size: 0.85rem; }
+  footer span { color: var(--coral); }
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Viajes <span>Rebeca</span></div>
+  <ul>
+    <li><a href="#" class="active" onclick="show('inicio',this)">Inicio</a></li>
+    <li><a href="#" onclick="show('viajes',this)">Guías de viaje</a></li>
+    <li><a href="#">Itinerarios</a></li>
+    <li><a href="#">Sorteos</a></li>
+    <li><a href="#">Sobre mí</a></li>
+  </ul>
+</nav>
+
+<div id="page-inicio" class="page active">
+  <div class="hero">
+    <h1>Explora el mundo conmigo 🌍</h1>
+    <p>Guías reales, itinerarios probados y sorteos exclusivos para viajeras apasionadas.</p>
+    <button class="btn-hero" onclick="show('viajes',null)">Ver guías de viaje →</button>
+  </div>
+  <div class="sorteo">🎉 ¡Sorteo activo! Gana una guía gratis esta semana — <a href="#">Participar ahora</a></div>
+  <div class="features">
+    <div class="f-card"><div class="icon">🗺️</div><h3>Guías detalladas</h3><p>Rutas, alojamientos y consejos desde la experiencia real.</p></div>
+    <div class="f-card"><div class="icon">📅</div><h3>Itinerarios listos</h3><p>Planifica tu viaje en minutos con itinerarios día a día.</p></div>
+    <div class="f-card"><div class="icon">🎁</div><h3>Sorteos & promos</h3><p>Descuentos exclusivos para la comunidad Viajes Rebeca.</p></div>
+  </div>
+  <h2 class="section-title">Destinos <span>populares</span></h2>
+  <div class="dest-grid">
+    <div class="dest-card"><div class="dest-img d1">🇮🇹</div><div class="dest-info"><h4>Italia completa</h4><p>Roma, Florencia y Venecia en una guía épica.</p><span class="tag">⭐ Más vendida</span></div></div>
+    <div class="dest-card"><div class="dest-img d2">🇹🇭</div><div class="dest-info"><h4>Tailandia auténtica</h4><p>Templos, playas y gastronomía sin perder lo esencial.</p><span class="tag">🔥 Trending</span></div></div>
+    <div class="dest-card"><div class="dest-img d3">🇲🇽</div><div class="dest-info"><h4>México mágico</h4><p>Desde CDMX hasta Oaxaca, lo mejor del país.</p><span class="tag">🆕 Nueva guía</span></div></div>
+  </div>
+  <div class="sobre-banner">
+    <div class="avatar">👩‍✈️</div>
+    <div class="sobre-text"><h3>¡Hola, soy Rebeca! ✈️</h3><p>Viajera empedernida y creadora de contenido. Aquí comparto todo lo que aprendo en cada rincón del mundo.</p></div>
+  </div>
+</div>
+
+<div id="page-viajes" class="page">
+  <div class="viajes-hero"><h1>Guías de Viaje 🗺️</h1><p>Descarga y viaja con confianza.</p></div>
+  <div class="filtros">
+    <button class="f-btn active">Todas</button>
+    <button class="f-btn">Europa 🇪🇺</button>
+    <button class="f-btn">Asia 🌏</button>
+    <button class="f-btn">América 🌎</button>
+    <button class="f-btn">Gratis</button>
+  </div>
+  <div class="guias-grid">
+    <div class="g-card"><div class="g-img g1">🇮🇹<span class="precio">€12.99</span></div><div class="g-info"><h4>Italia completa 2024</h4><p>Roma, Florencia, Venecia y Toscana en 40 páginas.</p><div class="g-meta"><span class="tag-t">Europa</span><button class="btn-c">Comprar</button></div></div></div>
+    <div class="g-card"><div class="g-img g2">🇹🇭<span class="precio">€9.99</span></div><div class="g-info"><h4>Tailandia — Lo esencial</h4><p>Bangkok, Chiang Mai e islas. Incluye presupuesto real.</p><div class="g-meta"><span class="tag-t">Asia</span><button class="btn-c">Comprar</button></div></div></div>
+    <div class="g-card"><div class="g-img g3">🇲🇽<span class="precio">€8.99</span></div><div class="g-info"><h4>México más allá del resort</h4><p>CDMX, Oaxaca, Yucatán y pueblos mágicos.</p><div class="g-meta"><span class="tag-t">América</span><button class="btn-c">Comprar</button></div></div></div>
+    <div class="g-card"><div class="g-img g4">🇯🇵<span class="precio">€14.99</span></div><div class="g-info"><h4>Japón — Guía Cultural</h4><p>Tokio, Kyoto y Osaka con guía de costumbres.</p><div class="g-meta"><span class="tag-t">Asia</span><button class="btn-c">Comprar</button></div></div></div>
+    <div class="g-card"><div class="g-img g5">🇵🇹<span class="precio">GRATIS</span></div><div class="g-info"><h4>Lisboa en 3 días</h4><p>Mi itinerario favorito de Portugal, completamente gratis.</p><div class="g-meta"><span class="tag-t">Europa</span><button class="btn-c" style="background:var(--teal)">Descargar</button></div></div></div>
+    <div class="g-card"><div class="g-img g6">🇨🇴<span class="precio">€10.99</span></div><div class="g-info"><h4>Colombia — Aventura total</h4><p>Cartagena, Medellín y el Eje Cafetero.</p><div class="g-meta"><span class="tag-t">América</span><button class="btn-c">Comprar</button></div></div></div>
+  </div>
+</div>
+
+<footer><p>© 2026 <span>Viajes Rebeca</span> — Hecho con amor y muchas maletas ✈️</p></footer>
+<script>
+function show(page,el){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+page).classList.add('active');document.querySelectorAll('nav ul li a').forEach(a=>a.classList.remove('active'));if(el)el.classList.add('active');window.scrollTo(0,0);}
+document.querySelectorAll('.f-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.f-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));
+</script>
+</body>
+</html>
